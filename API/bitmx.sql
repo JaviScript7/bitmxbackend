@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-12-2022 a las 07:32:34
+-- Tiempo de generación: 04-12-2022 a las 19:19:14
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 7.4.27
 
@@ -52,19 +52,17 @@ INSERT INTO `alumno` (`id`, `email`, `hashpass`, `Nombre`, `Carrera`, `Matricula
 --
 
 CREATE TABLE `asistencia` (
-  `id` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `id_taller` int(11) NOT NULL,
-  `fecha` varchar(256) COLLATE utf8_spanish_ci NOT NULL
+  `fecha` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `asistencia`
 --
 
-INSERT INTO `asistencia` (`id`, `id_usuario`, `id_taller`, `fecha`) VALUES
-(12, 8, 2, ''),
-(13, 7, 1, '');
+INSERT INTO `asistencia` (`id_usuario`, `id_taller`, `fecha`) VALUES
+(8, 2, '2022-12-01 17:45:19');
 
 -- --------------------------------------------------------
 
@@ -126,8 +124,7 @@ CREATE TABLE `talleres` (
 
 INSERT INTO `talleres` (`id_nombre`, `taller`, `horario`, `descripcion`, `imagen`, `ponente`, `idTabla`) VALUES
 (1, 'Marketing', '12:00:00', 'Director General de la agencia Winn Innovation', 'taller.jpg', 'DR JORGE ABRAMS', 0),
-(2, 'Redes', '01:00:00', 'Redes neuronales xd', 'taller.jpg', 'Rene García', 0),
-(3, 'Data Scientist', '12:30:00', 'Análisis de datos con python', '', 'ing. Javier ', 0);
+(2, 'Redes', '01:00:00', 'Redes neuronales xd', 'taller.jpg', 'Rene García', 0);
 
 -- --------------------------------------------------------
 
@@ -176,9 +173,8 @@ ALTER TABLE `alumno`
 -- Indices de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  ADD PRIMARY KEY (`id`,`id_usuario`,`id_taller`),
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_taller` (`id_taller`);
+  ADD PRIMARY KEY (`id_usuario`,`id_taller`),
+  ADD KEY `asistencia_ibfk_2` (`id_taller`);
 
 --
 -- Indices de la tabla `estatus`
@@ -217,12 +213,6 @@ ALTER TABLE `alumno`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `asistencia`
---
-ALTER TABLE `asistencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
 -- AUTO_INCREMENT de la tabla `estatus`
 --
 ALTER TABLE `estatus`
@@ -238,7 +228,7 @@ ALTER TABLE `perfil`
 -- AUTO_INCREMENT de la tabla `talleres`
 --
 ALTER TABLE `talleres`
-  MODIFY `id_nombre` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_nombre` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -268,3 +258,17 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+CREATE TABLE `inscripcion_taller_marketing` (
+  `id` int(5) NOT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `apellido_paterno` varchar(255) DEFAULT NULL,
+  `apellido_materno` varchar(255) DEFAULT NULL,
+  `institucion` varchar(255) DEFAULT NULL,
+  `carrera` varchar(255) DEFAULT NULL,
+  `matricula` varchar(255) DEFAULT NULL,
+  `correo` varchar(255) NOT NULL,
+  `celular` varchar(255) DEFAULT NULL,
+  `codigo` int(2) NOT NULL,
+  `asistencia` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
